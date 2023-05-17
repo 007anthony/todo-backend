@@ -31,6 +31,7 @@ function deleteTask(id) {
 function replaceTask(task) {
     deleteTask(task.id);
     addTask(task);
+    return task;
 }
 
 module.exports = {getAllTasks, getTask, addTask, deleteTask, replaceTask};
