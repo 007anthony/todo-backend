@@ -17,10 +17,10 @@ class NotFoundError extends StatusError {
     }
 }
 
-class UnprocessableContentError extends StatusError {
-    constructor (message) {
-        super(message, 422);
+class NotAcceptableError extends StatusError {
+    constructor(message) {
+        super(message, 406);
     }
 }
 
-module.exports = { UnauthorizedError, NotFoundError, UnprocessableContentError };
+module.exports = { UnauthorizedError, NotFoundError, NotAcceptableError };

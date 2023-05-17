@@ -4,6 +4,7 @@ const taskService = require('./taskService');
 const loginService = require('./userService');
 const Task = require('./task');
 const { UnauthorizedError } = require('./exceptions');
+const { nextTick } = require('process');
 const app = express();
 const port = 3000;
 
@@ -40,7 +41,21 @@ app.delete('/logout', (req, res) => {
     res.sendStatus(204);
 });
 
-// tasks
+/*  ---------------------------------------------------------------
+*   TASKS
+*   ---------------------------------------------------------------
+*/
+
+app.use('/tasks(/*)?', (req, res, next) => {
+    const isAuthenticated = req.session.isAuthenticated;
+    if(isAuthenticated) {
+        next();
+    }
+    else {
+        throw new UnauthorizedError("You are not authorized!")
+    }
+})
+
 app.get('/tasks', (req, res) => {
     res.send(taskService.getAllTasks());
 });
@@ -69,13 +84,17 @@ app.put('/tasks', (req, res) => {
     res.send(task);
 });
 
+/*  ---------------------------------------------
+*   ERROR-HANDLING
+*   ---------------------------------------------
+*/
 app.use((req, res) => {
     res.sendStatus(404);
 });
 
 app.use((err, req, res, _) => {
     console.log(err);
-    res.status(err.status).send({ status: err.status, msg: err.message });
+    res.status(err.status || 500).send({ status: err.status, msg: err.message });
 });
 
 app.listen(port, () => {
