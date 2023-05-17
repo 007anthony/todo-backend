@@ -3,6 +3,7 @@ module.exports = class Task {
         this.id = rawTask.id;
         this.title = rawTask.title;
         this.note = rawTask.note;
+        this.user = rawTask.user;
         this.createdOn = rawTask.createdOn;
         this.dueTo = rawTask.dueTo;
         this.finishedOn = rawTask.finishedOn;

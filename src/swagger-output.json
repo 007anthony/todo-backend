@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "title": "ToDo API",
+    "description": "This is a API that manages ToDos"
   },
   "host": "localhost:3000",
   "basePath": "/",

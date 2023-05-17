@@ -36,7 +36,7 @@ app.post('/login', (req, res) => {
         #swagger.responses[200] = {
             description: 'shows if the user is authenticated',
             schema: {
-                $isAuthenticated: true
+                $email: 'test@test.com'
             }
         }
         #swagger.responses[401] = {
@@ -48,15 +48,18 @@ app.post('/login', (req, res) => {
         }
     } */
     loginService.login(req.body.email, req.body.password);
-    req.session.isAuthenticated = true;
-    res.send({isAuthenticated: true});
+    req.session.email = req.body.email;
+    res.send({email: req.session.email});
 });
 
 app.get('/verify', (req, res) => {
     /* #swagger.description = "This is an endpoint to verify the cookie."
+       #swagger.responses[200] = {
+        description: 'The cookie is valid'
+       }
      */
-    if (req.session.isAuthenticated) {
-        res.send({ isAuthenticated: req.session.isAuthenticated });
+    if (req.session.email) {
+        res.send({ email: req.session.email });
     } else {
         throw new UnauthorizedError("You aren't authenticated");
     }
@@ -75,8 +78,7 @@ app.delete('/logout', (req, res) => {
 */
 
 app.use('/tasks(/*)?', (req, res, next) => {
-    const isAuthenticated = req.session.isAuthenticated;
-    if(isAuthenticated) {
+    if(req.session.email) {
         next();
     }
     else {
@@ -95,6 +97,7 @@ app.get('/tasks/:id', (req, res) => {
 
 app.post('/tasks', (req, res) => {
     req.body.id = taskId++;
+    req.body.user = req.session.email;
     const task = new Task(req.body);
     taskService.addTask(task);
     res.status(201).send(task);
