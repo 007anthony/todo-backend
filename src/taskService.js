@@ -1,4 +1,4 @@
-const tasks = require("./tasks.json");
+let tasks = require("./tasks.json");
 const {NotFoundError, UnprocessableContentError} = require("./exceptions");
 
 function getAllTasks() {
@@ -22,4 +22,10 @@ function addTask(task) {
     }
 }
 
-module.exports = {getAllTasks, getTask, addTask};
+function deleteTask(id) {
+    const task = getTask(id);
+    tasks = getAllTasks().filter(task => task.id !== id);
+    return task;     
+}
+
+module.exports = {getAllTasks, getTask, addTask, deleteTask};
