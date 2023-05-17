@@ -87,6 +87,18 @@ app.use('/tasks(/*)?', (req, res, next) => {
 })
 
 app.get('/tasks', (req, res) => {
+    /* 
+    #swagger.responses[200] = {
+        schema: {¨
+            $id: number,
+            $title: 'string',
+            $note: 'string',
+            $user: 'string',
+            $createdOn: 'YYYY-MM-dd',
+            $finishedOn: 'YYYY-MM-dd'
+        }
+    }
+    */
     res.send(taskService.getAllTasks());
 });
 
