@@ -28,4 +28,9 @@ function deleteTask(id) {
     return task;     
 }
 
-module.exports = {getAllTasks, getTask, addTask, deleteTask};
+function replaceTask(task) {
+    deleteTask(task.id);
+    addTask(task);
+}
+
+module.exports = {getAllTasks, getTask, addTask, deleteTask, replaceTask};

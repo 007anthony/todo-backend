@@ -32,6 +32,11 @@ app.delete("/tasks/:id", (req, res) => {
     res.status(200).send(task);
 });
 
+app.put("/tasks", (req, res) => {
+    const task = taskService.replaceTask(req.body);
+    res.send(task);
+})
+
 app.use((err, req, res, _) => {
     console.log(err);
     res.status(err.status).send({status: err.status, msg: err.message});
