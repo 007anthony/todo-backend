@@ -4,7 +4,8 @@ const taskService = require('./taskService');
 const loginService = require('./userService');
 const Task = require('./task');
 const { UnauthorizedError } = require('./exceptions');
-const { nextTick } = require('process');
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger-output.json');
 const app = express();
 const port = 3000;
 
@@ -18,17 +19,42 @@ app.use(session({
     cookie: {}
 }));
 
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
 /* --------------------------------------------
 *   LOGIN
 *  ---------------------------------------------
 */
 app.post('/login', (req, res) => {
+    /* #swagger.parameters['login'] = {
+        in: 'body',
+        description: 'Log in a user.',
+        schema: {
+            $email: 'test@test.com',
+            $password: 'm295'
+        }
+        #swagger.responses[200] = {
+            description: 'shows if the user is authenticated',
+            schema: {
+                $isAuthenticated: true
+            }
+        }
+        #swagger.responses[401] = {
+            description: 'The email address or the password are wrong',
+            schema: {
+                $status: 401,
+                $error: 'The username or password is wrong'
+            }
+        }
+    } */
     loginService.login(req.body.email, req.body.password);
     req.session.isAuthenticated = true;
     res.send({isAuthenticated: true});
 });
 
 app.get('/verify', (req, res) => {
+    /* #swagger.description = "This is an endpoint to verify the cookie."
+     */
     if (req.session.isAuthenticated) {
         res.send({ isAuthenticated: req.session.isAuthenticated });
     } else {
@@ -37,6 +63,8 @@ app.get('/verify', (req, res) => {
 });
 
 app.delete('/logout', (req, res) => {
+    /* #swagger.description = "Logs the user out"
+    */
     req.session.destroy();
     res.sendStatus(204);
 });
@@ -61,7 +89,7 @@ app.get('/tasks', (req, res) => {
 });
 
 app.get('/tasks/:id', (req, res) => {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     res.send(taskService.getTask(id));
 });
 
@@ -73,13 +101,14 @@ app.post('/tasks', (req, res) => {
 });
 
 app.delete('/tasks/:id', (req, res) => {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const task = taskService.deleteTask(id);
     res.status(200).send(task);
 });
 
 app.put('/tasks', (req, res) => {
     const newTask = new Task(req.body);
+    newTask.id = Number(newTask.id);
     const task = taskService.replaceTask(newTask);
     res.send(task);
 });

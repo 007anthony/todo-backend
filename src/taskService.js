@@ -8,6 +8,9 @@ function getAllTasks () {
 function getTask (id) {
     const task = tasks.find(task => task.id === Number(id));
     if (!task) {
+        if(isNaN(id)) {
+            throw new NotAcceptableError("ID is invalid. It must be a number");
+        }
         throw new NotFoundError(`The task with ID ${id} cannot be found`);
     }
     return task;
@@ -17,7 +20,7 @@ function addTask (task) {
     if (task.isValid()) {
         tasks.push(task);
     } else {
-        throw new NotAcceptableError('The request body misses at least one argument.');
+        throw new NotAcceptableError('The request body is unvalid. Check the documentation for more informations.');
     }
 }
 
@@ -28,6 +31,7 @@ function deleteTask (id) {
 }
 
 function replaceTask (task) {
+    getTask(task.id)
     deleteTask(task.id);
     addTask(task);
     return task;
