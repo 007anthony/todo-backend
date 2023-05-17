@@ -5,6 +5,12 @@ class StatusError extends Error {
     }
 }
 
+class UnauthorizedError extends StatusError {
+    constructor(message) {
+        super(message, 401);
+    }
+}
+
 class NotFoundError extends StatusError {
     constructor(message) {
         super(message, 404);
@@ -17,4 +23,4 @@ class UnprocessableContentError extends StatusError {
     }
 }
 
-module.exports = {NotFoundError, UnprocessableContentError};
+module.exports = {UnauthorizedError, NotFoundError, UnprocessableContentError};
