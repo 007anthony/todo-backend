@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "ToDo API",
-    "description": "This is a API that manages ToDos"
+    "title": "REST API",
+    "description": ""
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -16,31 +16,62 @@
         "description": "",
         "parameters": [
           {
-            "name": "login",
+            "name": "body",
             "in": "body",
-            "description": "Log in a user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "shows if the user is authenticated",
             "schema": {
               "type": "object",
               "properties": {
                 "email": {
                   "type": "string",
                   "example": "test@test.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "m295"
                 }
               },
               "required": [
-                "email",
-                "password"
-              ]
+                "email"
+              ],
+              "xml": {
+                "name": "main"
+              }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+          },
+          "401": {
+            "description": "The email address or the password are wrong",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 401
+                },
+                "error": {
+                  "type": "string",
+                  "example": "The username or password is wrong"
+                }
+              },
+              "required": [
+                "status",
+                "error"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -51,7 +82,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "The cookie is valid"
           }
         }
       }
@@ -87,6 +118,9 @@
               "type": "object",
               "properties": {
                 "id": {
+                  "example": "any"
+                },
+                "user": {
                   "example": "any"
                 }
               }

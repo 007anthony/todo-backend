@@ -5,7 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "swagger-autogen": "node src/swagger-autogen.js",
-        "eslint": "eslint src/*.js"
+        "eslint": "node src/index.js"
     },
     "repository": {
         "type": "git",
