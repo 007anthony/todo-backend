@@ -11,4 +11,10 @@ class NotFoundError extends StatusError {
     }
 }
 
-module.exports = {NotFoundError};
+class UnprocessableContentError extends StatusError {
+    constructor(message) {
+        super(message, 422);
+    }
+}
+
+module.exports = {NotFoundError, UnprocessableContentError};

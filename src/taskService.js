@@ -1,5 +1,5 @@
 const tasks = require("./tasks.json");
-const {NotFoundError} = require("./exceptions");
+const {NotFoundError, UnprocessableContentError} = require("./exceptions");
 
 function getAllTasks() {
     return tasks;
@@ -13,4 +13,13 @@ function getTask(id) {
     return task;
 }
 
-module.exports = {getAllTasks, getTask};
+function addTask(task) {
+    if(task.isValid()) {
+        tasks.push(task);
+    }
+    else {
+        throw new UnprocessableContentError("The request body misses at least one argument.")
+    }
+}
+
+module.exports = {getAllTasks, getTask, addTask};
