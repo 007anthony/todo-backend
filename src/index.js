@@ -3,7 +3,7 @@ const session = require('express-session')
 const taskService = require('./taskService');
 const loginService = require('./userService');
 const Task = require('./task');
-const { NotFoundError, UnprocessableContentError } = require('./exceptions');
+const { UnauthorizedError } = require('./exceptions');
 const app = express();
 const port = 3000;
 
@@ -25,6 +25,15 @@ app.post('/login', (req, res) => {
     loginService.login(req.body.email, req.body.password);
     req.session.isAuthenticated = true;
     res.sendStatus(200);
+});
+
+app.get('/verify', (req, res) => {
+    if(req.session.isAuthenticated) {
+        res.send({isAuthenticated: req.session.isAuthenticated});
+    }
+    else{
+        throw new UnauthorizedError("You aren't authenticated")
+    }
 });
 
 //tasks
