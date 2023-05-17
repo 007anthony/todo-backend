@@ -1,5 +1,5 @@
 const express = require('express');
-const {getAllTasks} = require('./taskService');
+const taskService = require('./taskService');
 const app = express();
 const port = 3000;
 
@@ -8,18 +8,12 @@ app.use(express.json());
 // endpoints
 
 app.get('/tasks', (req, res) => {
-    res.send(tasks);
+    res.send(taskService.getAllTasks());
 });
 
 app.get("/tasks/:id", (req, res) => {
     const id = req.params.id;
-    const task = tasks.find(task => task.id === Number(id));
-    if(task) {
-        res.send(task);
-    }
-    else {
-        throw new 
-    }
+    res.send(taskService.getTask(id));
 })
 
 app.use((err, req, res, _) => {
