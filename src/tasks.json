@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "title": "cook dinner",
+        "note": "I have to cook pasta",
+        "createdOn": "2016-02-13",
+        "dueTo": "2016-02-13",
+        "finishedOn": "2016-02-14"
+    },
+    {
+        "id": 2,
+        "title": "do homeworks",
+        "note": "english book on page 12\n math multiplication",
+        "createdOn": "2017-06-25",
+        "dueTo": "2017-06-30",
+        "finishedOn": "2017-06-30"
+    },
+    {
+        "id": 3,
+        "title": "learn for backend UEK",
+        "note": "express.js",
+        "createdOn": "2023-05-16",
+        "dueTo": "2023-05-17",
+        "finishedOn": ""
+    },
+    {
+        "id": 4,
+        "title": "check emails",
+        "note": "check my zli email",
+        "createdOn": "2023-06-12",
+        "dueTo": "2023-06-28",
+        "finishedOn": "2023-06-22"
+    }
+]
