@@ -1,6 +1,7 @@
 const express = require('express');
 const taskService = require('./taskService');
 const Task = require('./task');
+const { NotFoundError, UnprocessableContentError } = require('./exceptions');
 const app = express();
 const port = 3000;
 
@@ -33,7 +34,8 @@ app.delete("/tasks/:id", (req, res) => {
 });
 
 app.put("/tasks", (req, res) => {
-    const task = taskService.replaceTask(req.body);
+    const newTask = new Task(req.body);
+    const task = taskService.replaceTask(newTask);  
     res.send(task);
 })
 
