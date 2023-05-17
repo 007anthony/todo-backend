@@ -11,7 +11,7 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-        "semi": ["warn", "always"],
-        "indent": ["warn", 4]
+        indent: ["warn", 4],
+        semi: ["warn", "always"]
     }
 }

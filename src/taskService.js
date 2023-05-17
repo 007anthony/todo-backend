@@ -1,37 +1,36 @@
-let tasks = require("./tasks.json");
-const {NotFoundError, UnprocessableContentError} = require("./exceptions");
+let tasks = require('./tasks.json');
+const { NotFoundError, UnprocessableContentError } = require('./exceptions');
 
-function getAllTasks() {
+function getAllTasks () {
     return tasks;
 }
 
-function getTask(id) {
+function getTask (id) {
     const task = tasks.find(task => task.id === Number(id));
-    if(!task) {
-        throw new NotFoundError(`The task with ID ${id} cannot be found`)
+    if (!task) {
+        throw new NotFoundError(`The task with ID ${id} cannot be found`);
     }
     return task;
 }
 
-function addTask(task) {
-    if(task.isValid()) {
+function addTask (task) {
+    if (task.isValid()) {
         tasks.push(task);
-    }
-    else {
-        throw new UnprocessableContentError("The request body misses at least one argument.")
+    } else {
+        throw new UnprocessableContentError('The request body misses at least one argument.');
     }
 }
 
-function deleteTask(id) {
+function deleteTask (id) {
     const task = getTask(id);
     tasks = getAllTasks().filter(task => task.id !== id);
-    return task;     
+    return task;
 }
 
-function replaceTask(task) {
+function replaceTask (task) {
     deleteTask(task.id);
     addTask(task);
     return task;
 }
 
-module.exports = {getAllTasks, getTask, addTask, deleteTask, replaceTask};
+module.exports = { getAllTasks, getTask, addTask, deleteTask, replaceTask };

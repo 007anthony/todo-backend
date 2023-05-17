@@ -1,6 +1,6 @@
 module.exports = class Task {
-    constructor(rawTask) {
-        this.id = rawTask.id
+    constructor (rawTask) {
+        this.id = rawTask.id;
         this.title = rawTask.title;
         this.note = rawTask.note;
         this.createdOn = rawTask.createdOn;
@@ -8,7 +8,7 @@ module.exports = class Task {
         this.finishedOn = rawTask.finishedOn;
     }
 
-    isValid() {
+    isValid () {
         return this.id && this.title && this.createdOn;
     }
-}
+};
